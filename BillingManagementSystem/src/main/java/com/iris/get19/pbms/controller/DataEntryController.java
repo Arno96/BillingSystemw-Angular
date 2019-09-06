@@ -11,9 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.iris.get19.pbms.dao.model.DataEntryOperator;
@@ -21,8 +24,27 @@ import com.iris.get19.pbms.dao.model.Developer;
 import com.iris.get19.pbms.dao.model.ProjectConfiguration;
 import com.iris.get19.pbms.service.DataEntryService;
 
-@Controller
+@RestController
 public class DataEntryController {
+	
+	@Autowired
+	private DataEntryService dataEntryService;
+	
+
+	@Autowired
+	HttpSession session;
+	
+	@CrossOrigin(origins="http://localhost:4200")
+	@RequestMapping(value= "/submitAttendance",method=RequestMethod.POST)
+	public boolean submitDevAttendance(@RequestBody DataEntryOperator deoObj) {
+		
+		/*if(checkSession(map)) {
+			return new ModelAndView("login");
+		}*/
+		boolean saved = dataEntryService.setDevAttendance(deoObj);
+		return saved;
+	}
+	
 	
 /*	@Autowired
 	private DataEntryService dataEntryService;

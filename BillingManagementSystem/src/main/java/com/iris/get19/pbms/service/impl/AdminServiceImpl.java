@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.iris.get19.pbms.dao.DeveloperDao;
 import com.iris.get19.pbms.dao.ProjectDao;
 import com.iris.get19.pbms.dao.model.DataEntryOperator;
+import com.iris.get19.pbms.dao.model.DevAllocation;
 import com.iris.get19.pbms.dao.model.Developer;
 import com.iris.get19.pbms.dao.model.DeveloperRole;
 import com.iris.get19.pbms.dao.model.Project;
@@ -57,9 +58,93 @@ public class AdminServiceImpl implements AdminService {
 
 
 	@Override
-	public boolean setDevAllocate(Developer devObj) {
-		return developerDao.setDevAllocate(devObj);
+	public boolean setDevAllocate(DevAllocation devObj) {
+			return developerDao.setDevAllocate(devObj);
 	}
+
+
+	@Override
+	public List<Developer> getAllDevelopers() {
+		return developerDao.getAllDeveloper();
+	}
+
+
+	
+
+	@Override
+	public double getBill(int id, String month, int year) {
+		DevAllocation devObj=projectDao.getDevAlObj(id);
+		double perHourBilling=devObj.getPcObj() .getPerHourBilling();
+		//String name = developerDao.getDeveloperById(developerId);
+		//map.addAttribute("name", name);
+		DataEntryOperator deo=developerDao.getDeoObj(id, month,year);
+		System.out.println(deo.getfullDay());
+		double bill = (deo.getfullDay()*9+deo.gethalfDay()*4.5)*perHourBilling;
+		return bill;
+	}
+	@Override
+	public List<ProjectConfiguration> getAllProjectConfig() {
+		return projectDao.getAllProjectConfig();
+	}
+	@Override
+	public List<ProjectConfiguration> getAllConfigId(int id) {
+		return projectDao.getAllConfigId(id);
+	}
+
+	@Override
+	public String getProjectName(int id) {
+		Project p = projectDao.getProjectById(id);
+		System.out.println(p);
+		String name = p.getProjectName();
+		return name;
+	}
+	
+	@Override
+	public double getProjBill(int id, String month, int year) {
+		/*if(checkSession(map)) {
+			return "login";
+		}*/
+		try {
+			System.out.println(id + month);
+			double bill = 0;
+			List<ProjectConfiguration> projConfigList= projectDao.getAllConfigIds(id);
+		
+			//String name =getProjectName(id);
+			
+			int count = 0;
+			//List<Double> sum = new ArrayList<Double>();
+			//List<DevAllocation> obj = new ArrayList<DevAllocation>();
+			for(ProjectConfiguration configObj: projConfigList)
+			{
+				int cid = configObj.getConfigurationId();
+				System.out.println(cid);
+				System.out.println("inside loop");
+				DevAllocation devObj=projectDao.getDevAlObjByConfigId(cid);
+				System.out.println("inside loop1");
+				double perHourBilling=devObj.getPcObj() .getPerHourBilling();
+				System.out.println("inside loop2");
+				int Id = devObj.getdObj().getDeveloperId();
+				System.out.println("inside loop3");
+				DataEntryOperator deo=developerDao.getDeoObj(Id, month,year);
+				System.out.println("inside loop4");
+				System.out.println(deo.getfullDay());
+				System.out.println("inside loop5");
+			    bill += (deo.getfullDay()*9+deo.gethalfDay()*4.5)*perHourBilling;
+				
+				count++;
+				
+			}
+			
+			return bill;
+		}
+		catch(Exception e) {
+			e.printStackTrace();;
+		}
+		return 0;
+	}
+
+
+	
 
 /*	@Autowired 
 	private ProjectDao projectDao;

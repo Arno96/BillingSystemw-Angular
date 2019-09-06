@@ -8,6 +8,8 @@ import com.iris.get19.pbms.dao.model.ProjectConfiguration;
 
 public interface DataEntryService {
 
+	boolean setDevAttendance(DataEntryOperator deoObj);
+
 /*	List<Developer> getAllDeveloper();
 
 	List<Developer> getDeveloper(List<Developer> devl);

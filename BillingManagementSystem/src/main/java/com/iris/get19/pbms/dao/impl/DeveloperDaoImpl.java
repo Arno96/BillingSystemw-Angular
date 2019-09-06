@@ -1,6 +1,8 @@
 package com.iris.get19.pbms.dao.impl;
 
 
+import java.util.List;
+
 //import java.util.List;
 
 import javax.persistence.Column;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.iris.get19.pbms.dao.DeveloperDao;
 import com.iris.get19.pbms.dao.model.DataEntryOperator;
+import com.iris.get19.pbms.dao.model.DevAllocation;
 import com.iris.get19.pbms.dao.model.Developer;
 import com.iris.get19.pbms.dao.model.ProjectConfiguration;
 
@@ -32,7 +35,7 @@ public class DeveloperDaoImpl implements DeveloperDao {
 	private SessionFactory sessionFactory;
 	
 	@Override
-	public boolean setDevAllocate(Developer devObj) {
+	public boolean setDevAllocate(DevAllocation devObj) {
 		try
 		{
 			Session session=sessionFactory.getCurrentSession();
@@ -44,6 +47,54 @@ public class DeveloperDaoImpl implements DeveloperDao {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	@Override
+	public List<Developer> getAllDeveloper() {
+		try
+		{
+			Session session=sessionFactory.getCurrentSession();
+			Query q = session.createQuery("from Developer");
+			return q.list();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public boolean setAttendance(DataEntryOperator deoObj) {
+		try
+		{
+			Session session=sessionFactory.getCurrentSession();
+			session.save(deoObj);
+			return true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public DataEntryOperator getDeoObj(int id, String month, int year) {
+		try
+		{
+			Session session=sessionFactory.getCurrentSession();
+			Query q = session.createQuery("from DataEntryOperator where devid=:x and month=:y and year=:z ");
+			q.setParameter("x", id);
+			q.setParameter("y", month);
+			q.setParameter("z",year);
+			return (DataEntryOperator) q.getResultList().get(0);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
 	}
 	                                                                                              
 	/*@Autowired

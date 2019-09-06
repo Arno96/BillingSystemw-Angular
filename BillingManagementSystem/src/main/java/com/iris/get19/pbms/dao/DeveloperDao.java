@@ -12,7 +12,10 @@ import java.util.List;
 
 
 public interface DeveloperDao {
-	public boolean setDevAllocate(Developer devObj);
+	public boolean setDevAllocate(DevAllocation devObj);
+	public List<Developer> getAllDeveloper();
+	public boolean setAttendance(DataEntryOperator deoObj);
+	public DataEntryOperator getDeoObj(int id, String month, int year);
 	/*public List<Developer> getAllDeveloper();
 	public List<Developer> getAll();
 	public Developer getDeveloper(int id,String pass);
@@ -24,4 +27,7 @@ public interface DeveloperDao {
 	public DevAllocation getProAllocationObj(int id);
 	public String getDeveloperById(int id);
 	public List<Developer> getAllDeveloperNotAllocated();*/
+	
+	
+	
 }

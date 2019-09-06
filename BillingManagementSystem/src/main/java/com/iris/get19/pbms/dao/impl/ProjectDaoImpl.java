@@ -71,6 +71,113 @@ public class ProjectDaoImpl implements ProjectDao{
 		return null;
 	}
 
+	@Override
+	public List<ProjectConfiguration> getAllProjectConfig() {
+		try
+		{
+			Session session = sessionFactory.getCurrentSession();
+			Query q = session.createQuery("from ProjectConfiguration");
+			return q.list();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public DevAllocation getConfig(int id) {
+		
+		return null;
+	}
+
+	@Override
+	public DevAllocation getDevAlObj(int id) {
+		try
+		{
+			Session session = sessionFactory.getCurrentSession();
+			Query q = session.createQuery("from DevAllocation where devid=:x");
+			q.setParameter("x", id);
+			return (DevAllocation) q.getResultList().get(0);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ProjectConfiguration> getAllConfigId(int id) {
+		
+				try {
+					Session session=sessionFactory.getCurrentSession();
+					Query q=session.createQuery("from ProjectConfiguration");
+					return q.list();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				return null;
+	}
+
+	@Override
+	public Project getProjectById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DevAllocation getDevAlObjByConfigId(int cid) {
+		try
+		{
+			Session session = sessionFactory.getCurrentSession();
+			Query q = session.createQuery("from DevAllocation where configid=:x");
+			q.setParameter("x", cid);
+			return (DevAllocation) q.getResultList().get(0);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ProjectConfiguration> getAllConfigIds(int id) {
+		try {
+			Session session=sessionFactory.getCurrentSession();
+			Query q=session.createQuery("from ProjectConfiguration where projectid=:x");
+			q.setParameter("x", id);
+			return q.list();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	
+	/*public DevAllocation getDevAlObjByConfigId(int cid) {
+			try
+			{
+				Session session = sessionFactory.getCurrentSession();
+				Query q = session.createQuery("from DevAllocation where configid=:x");
+				q.setParameter("x", cid);
+				return (DevAllocation) q.getResultList().get(0);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			return null;
+	}*/
+
+	
+
 /*	@Autowired
 	private SessionFactory sessionFactory;//To get session factory from dbconfig.java file
 	

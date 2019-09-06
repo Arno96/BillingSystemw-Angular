@@ -15,6 +15,20 @@ public interface ProjectDao {
 
 	List<Project> getAllProjects();
 
+	List<ProjectConfiguration> getAllProjectConfig();
+
+	DevAllocation getConfig(int id);
+
+	DevAllocation getDevAlObj(int id);
+
+	List<ProjectConfiguration> getAllConfigId(int id);
+
+	Project getProjectById(int id);
+
+	DevAllocation getDevAlObjByConfigId(int cid);
+
+	List<ProjectConfiguration> getAllConfigIds(int id);
+
 		/*public List<Project> getAllProject();
 		public Project getProjectById(int projectId);
 		public boolean setProjectConfig(ProjectConfiguration obj);

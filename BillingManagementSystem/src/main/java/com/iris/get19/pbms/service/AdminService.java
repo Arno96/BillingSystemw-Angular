@@ -3,6 +3,7 @@ package com.iris.get19.pbms.service;
 import java.util.List;
 
 import com.iris.get19.pbms.dao.model.DataEntryOperator;
+import com.iris.get19.pbms.dao.model.DevAllocation;
 import com.iris.get19.pbms.dao.model.Developer;
 import com.iris.get19.pbms.dao.model.DeveloperRole;
 import com.iris.get19.pbms.dao.model.Project;
@@ -15,7 +16,11 @@ public interface AdminService {
 	boolean setProjectConfig(ProjectConfiguration projObj);
 	List<Project> getAllProjects();
 	List<DeveloperRole> getAllRoles();
-	boolean setDevAllocate(Developer devObj);
+	boolean setDevAllocate(DevAllocation devObj);
+	List<Developer> getAllDevelopers();
+	List<ProjectConfiguration> getAllProjectConfig();
+	double getBill(int id, String month, int year);
+	double getProjBill(int id, String month, int year);
 	/*List<Project> getAllProject();
 	List<Role> getAllRole();
 	List<ProjectConfiguration> getAllProjectConfig();
@@ -33,9 +38,7 @@ public interface AdminService {
 	String getProjectName(int id);
 	boolean updateProjectConfig(ProjectConfiguration pObj);
 	List<Developer> getAllDeveloperNotAllocated();*/
-	
-	
-	
-
-	
+	List<ProjectConfiguration> getAllConfigId(int id);
+	String getProjectName(int id);
+			
 }

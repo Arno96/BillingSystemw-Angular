@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.iris.get19.pbms.dao.model.DevAllocation;
 import com.iris.get19.pbms.dao.model.Developer;
 import com.iris.get19.pbms.dao.model.DeveloperRole;
 import com.iris.get19.pbms.dao.model.Project;
@@ -60,9 +62,45 @@ public class AdminController {
 	}
 	@CrossOrigin(origins="http://localhost:4200")
 	@RequestMapping(value= "/addDevAllocate",method=RequestMethod.POST)
-	public boolean devAllocate(@RequestBody Developer devObj) {
+	public boolean devAllocate(@RequestBody DevAllocation devObj) {
 		boolean saved=adminService.setDevAllocate(devObj);
 		return saved;
+	}
+	
+	@CrossOrigin(origins="http://localhost:4200")
+	@RequestMapping(value= "/getDevelopers",method=RequestMethod.GET)
+	public ResponseEntity<List<Developer>> getAllDeveloper(@RequestBody Developer devObj) {
+		
+		/*if(checkSession(map)) {
+			return new ModelAndView("login");
+		}*/
+		return new ResponseEntity<List<Developer>>(adminService.getAllDevelopers(),HttpStatus.OK);
+	}
+	
+	@CrossOrigin(origins="http://localhost:4200")
+	@RequestMapping(value= "/getAllProjectConfig",method=RequestMethod.GET)
+	public ResponseEntity<List<ProjectConfiguration>> getAllProjectConfig(@RequestBody Developer devObj) {
+		
+		/*if(checkSession(map)) {
+			return new ModelAndView("login");
+		}*/
+		return new ResponseEntity<List<ProjectConfiguration>>(adminService.getAllProjectConfig(),HttpStatus.OK);
+	}
+	
+	@CrossOrigin(origins="http://localhost:4200")							
+	@RequestMapping(value= "/developerBilling/{id}/{month}/{year}", method= RequestMethod.GET)
+	public double developerBilling(@PathVariable int id,@PathVariable String month,@PathVariable int year)
+	{	
+		double bill=adminService.getBill(id,month,year);
+		return bill;
+	}
+	
+	@CrossOrigin(origins="http://localhost:4200")							
+	@RequestMapping(value= "/projectBilling/{id}/{month}/{year}", method= RequestMethod.GET)
+	public double projectBilling(@PathVariable int id,@PathVariable String month,@PathVariable int year)
+	{	
+		double bill=adminService.getProjBill(id,month,year);
+		return bill;
 	}
 	
 /*	@Autowired

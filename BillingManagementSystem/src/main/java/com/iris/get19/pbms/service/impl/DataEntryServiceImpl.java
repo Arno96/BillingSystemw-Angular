@@ -21,6 +21,16 @@ import com.iris.get19.pbms.service.DataEntryService;
 @Transactional
 public class DataEntryServiceImpl implements DataEntryService {
 
+	@Autowired
+	private DeveloperDao developerDao;
+	
+	@Override
+	public boolean setDevAttendance(DataEntryOperator deoObj) {
+		return developerDao.setAttendance(deoObj);
+		
+		
+	}
+
 /*	@Autowired
 	private DeveloperDao developerDao;
 	
